@@ -1,5 +1,11 @@
 (defproject fun-prog-links "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
+  :url "http://github.com/metosin/fun-prog-links"
+  :scm {:name "git"
+        :url "http://github.com/metosin/fun-prog-links"}
+  :license {:name "The MIT License (MIT)"
+            :url "http://opensource.org/licenses/mit-license.php"
+            :distribution :repo
   :dependencies [[org.clojure/clojure "1.6.0"]
 
                  [metosin/compojure-api "0.16.2"]
