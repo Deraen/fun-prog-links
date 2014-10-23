@@ -6,6 +6,7 @@
             [compojure.api.sweet :refer :all]
             [garden.core :refer [css]]
             [garden.units :as gu :refer [px]]
+            [garden.stylesheet :refer [at-media]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [html5 include-css]]
             [monger.collection :as mc]
@@ -57,7 +58,7 @@
   (cf/unparse time-format datetime))
 
 (defn prettify-url [url]
-  (string/replace url #"^http[s]?:\/\/" ""))
+  (string/replace url #"^http[s]?://" ""))
 
 ;; "Frontend"
 
@@ -100,8 +101,7 @@
 
 (def style
   (css
-    ["@font-face" {
-                   :font-family "\"Anonymous Pro\""
+    ["@font-face" {:font-family "\"Anonymous Pro\""
                    :font-style :normal;
                    :font-weight 400;
                    :src "local('Anonymous Pro'), local('AnonymousPro'), url(//fonts.gstatic.com/s/anonymouspro/v8/Zhfjj_gat3waL4JSju74E0bTF2-gLvP1ecKBiMhtO8o.woff2) format('woff2');"
@@ -113,8 +113,11 @@
 
     [:footer {:margin-top (px 40)}]
 
-    [:.container {:width (px 800)
+    [:.container {:width "60%"
                   :margin "0 auto"}]
+    (at-media
+      {:max-width (px 900)}
+      [:.container {:width "100%"}])
 
     [:a {:color link-color}]
 
@@ -123,11 +126,14 @@
      [:li {:list-style :none
            :line-height (px 32)}]]
 
-    [:.link {:font-size (px 18)
-             :text-decoration :none
-             :color color2}]
+    [:a.link {:font-size (px 18)
+              :text-decoration :none
+              :color color2}]
+
     [:span.tags {:margin "0 10px"}]
     [:span.tag {:background color1
+                :display :inline-block
+                :line-height (px 24)
                 :border-radius (px 4)
                 :padding "2px 4px"
                 :margin-right "5px"}]
