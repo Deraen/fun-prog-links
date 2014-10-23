@@ -52,7 +52,7 @@
        (update-in [:timestamp] #(or % (DateTime.)))
        (mc/insert-and-return db :links <>)))
 
-(def time-format (cf/formatter "dd.MM.yyyy HH:mm" (t/default-time-zone)))
+(def time-format (cf/formatter "dd.MM.yyyy HH:mm" (t/time-zone-for-id "Europe/Helsinki")))
 (defn date->str [datetime]
   (cf/unparse time-format datetime))
 
