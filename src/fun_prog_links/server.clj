@@ -3,4 +3,4 @@
             [org.httpkit.server :refer :all]))
 
 (defn -main [& [port]]
-  (run-server app {:port (or port (System/getenv "PORT") 8080)}))
+  (run-server app {:port (or port (some-> (System/getenv "PORT") Integer.) 8080)}))
