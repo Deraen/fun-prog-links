@@ -71,11 +71,11 @@
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
        (include-css "/main.css")]
       [:body
-       [:a {:href "https://github.com/Deraen/fun-prog-links"}
+       [:a {:href "//github.com/Deraen/fun-prog-links"}
         [:img {:style "position: absolute; top: 0; right: 0; border: 0;"
-               :src "https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+               :src "//camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
                :alt "Fork me on GitHub"
-               :data-canonical-src "https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"}]]
+               :data-canonical-src "//s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"}]]
        [:div.container
         [:header [:h1 "Fun Prog Links"]]
         [:main
@@ -104,7 +104,7 @@
                    :font-family "\"Anonymous Pro\""
                    :font-style :normal;
                    :font-weight 400;
-                   :src "local('Anonymous Pro'), local('AnonymousPro'), url(http://fonts.gstatic.com/s/anonymouspro/v8/Zhfjj_gat3waL4JSju74E0bTF2-gLvP1ecKBiMhtO8o.woff2) format('woff2');"
+                   :src "local('Anonymous Pro'), local('AnonymousPro'), url(//fonts.gstatic.com/s/anonymouspro/v8/Zhfjj_gat3waL4JSju74E0bTF2-gLvP1ecKBiMhtO8o.woff2) format('woff2');"
                    :unicode-range "U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;"}]
 
     [:body {:background bg-color
