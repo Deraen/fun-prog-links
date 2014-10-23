@@ -19,7 +19,7 @@
            [org.bson.types ObjectId]))
 
 ;; DB
-(let [m (mg/connect-via-uri (or (System/getenv "MONOHQ_URI") "mongodb://127.0.0.1/fun-prog-links"))]
+(let [m (mg/connect-via-uri (or (System/getenv "MONGOLAB_URI") "mongodb://127.0.0.1/fun-prog-links"))]
   (def conn (:conn m))
   (def db (:db m)))
 
@@ -81,7 +81,7 @@
              [:a.link {:href uri
                        :target "new"} (prettify-url uri)]
              [:span.tags
-              (for [tag tags]
+              (for [tag (sort tags)]
                 [:span.tag ":" tag])]
              [:span.nick nick]
              [:span.time "@" (date->str timestamp)]])]]

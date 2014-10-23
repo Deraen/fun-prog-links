@@ -6,8 +6,9 @@
   :license {:name "The MIT License (MIT)"
             :url "http://opensource.org/licenses/mit-license.php"
             :distribution :repo}
+  :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
-
+                 [http-kit "2.1.16"]
                  [metosin/compojure-api "0.16.2"]
                  [metosin/ring-http-response "0.5.1"]
                  [metosin/ring-swagger-ui "2.0.17"]
