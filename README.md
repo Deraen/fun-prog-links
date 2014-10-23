@@ -1,10 +1,6 @@
 # fun-prog-links
 
-FIXME
-
 ## Usage
-
-### Running
 
 `lein ring server`
 
@@ -21,4 +17,4 @@ java -jar target/server.jar
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 Juho Teperi

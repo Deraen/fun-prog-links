@@ -4,11 +4,14 @@
             [clj-time.local :as cl]
             [clojure.string :as string]
             [compojure.api.sweet :refer :all]
+            [garden.core :refer [css]]
+            [garden.units :as gu :refer [px]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [html5 include-css]]
             [monger.collection :as mc]
             [monger.core :as mg]
             monger.joda-time
+            [monger.query :as mq]
             [ring.util.http-response :refer :all]
             [schema.core :as s]
             [swiss.arrows :refer :all])
@@ -35,13 +38,11 @@
                          (assoc (s/optional-key :timestamp) DateTime)))
 
 ;; Domain fns
-(defn coerce-link [link]
-  link)
-
 (defn find-links [& [q]]
-  (->> (mc/find-maps db :links (or q {}))
-       (map coerce-link)))
-
+  (mq/with-collection
+    db "links"
+    (mq/find (or q {}))
+    (mq/sort {:timestamp -1})))
 
 (defn insert-link [link]
   (-<> link
@@ -68,25 +69,74 @@
        [:meta {:charset "utf-8"}]
        [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge"}]
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
-       (include-css "style.css")]
+       (include-css "/main.css")]
       [:body
-       [:h1 "Links"]
-       [:ul
-        (for [{:keys [uri nick tags timestamp]}
-              (find-links)]
-          [:li
-           [:a.link {:href uri} (prettify-url uri)]
-           [:span.tags
-            (for [tag tags]
-              [:span.tag ":" tag])]
-           [:span.nick nick]
-           [:span.time "@" (date->str timestamp)]])]
-       [:a {:href "/docs"} "API docs"]])))
+       [:div.container
+        [:header [:h1 "Fun Prog Links"]]
+        [:main
+         [:ul
+          (for [{:keys [uri nick tags timestamp]}
+                (find-links)]
+            [:li
+             [:a.link {:href uri
+                       :target "new"} (prettify-url uri)]
+             [:span.tags
+              (for [tag tags]
+                [:span.tag ":" tag])]
+             [:span.nick nick]
+             [:span.time "@" (date->str timestamp)]])]]
+        [:footer [:a {:href "/docs"} "API docs"]]]])))
+
+(def bg-color "#1c1c1c")
+(def link-color "#ccc")
+
+(def color1 "#4d98a5")
+(def color2 "#5073dd")
+
+(def style
+  (css
+    ["@font-face" {
+                   :font-family "\"Anonymous Pro\""
+                   :font-style :normal;
+                   :font-weight 400;
+                   :src "local('Anonymous Pro'), local('AnonymousPro'), url(http://fonts.gstatic.com/s/anonymouspro/v8/Zhfjj_gat3waL4JSju74E0bTF2-gLvP1ecKBiMhtO8o.woff2) format('woff2');"
+                   :unicode-range "U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;"}]
+
+    [:body {:background bg-color
+            :color "#fff"
+            :font-family "\"Anonymous Pro\""}]
+
+    [:footer {:margin-top (px 40)}]
+
+    [:.container {:width (px 800)
+                  :margin "0 auto"}]
+
+    [:a {:color link-color}]
+
+    [:ul {:margin 0
+          :padding 0}
+     [:li {:list-style :none
+           :line-height (px 32)}]]
+
+    [:.link {:font-size (px 18)
+             :text-decoration :none
+             :color color2}]
+    [:span.tags {:margin "0 10px"}]
+    [:span.tag {:background color1
+                :border-radius (px 4)
+                :padding "2px 4px"
+                :margin-right "5px"}]
+    [:span.nick {:margin-right (px 10)}]
+    [:span.time {:color "#888"}]))
 
 ;; Http handler
 (defapi app
   (GET* "/" []
-    (ok (index)))
+    (-> (ok (index))
+        (content-type "text/html; chaarset=UTF-8")))
+  (GET* "/main.css" []
+    (-> (ok style)
+        (content-type "text/css")))
   (swagger-ui "/docs")
   (swagger-docs
     :title "Fun-prog-links Api"
